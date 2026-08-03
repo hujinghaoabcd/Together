@@ -1,2 +1,6 @@
-<template><div class="motto">★　历经千险，锐逾坚、啸润越峡东去。　★</div></template>
-<style scoped>.motto{margin:20px auto;padding:18px;border-radius:22px;max-width:1200px;text-align:center;background:linear-gradient(90deg,#ffe5eb,#ffd2dd);font-size:20px;color:#444}</style>
+<template>
+  <div class="motto"><span>✦</span>{{ site.motto }}<span>✦</span></div>
+</template>
+<script setup lang="ts">
+import { site } from '../data/site'
+</script>

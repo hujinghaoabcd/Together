@@ -1,31 +1,58 @@
 <template>
-  <section class="counter">
-    <p>♥ 我们已经一起走过 ♥</p>
-    <div class="time">
-      <b>{{days}}</b> 天 <b>{{hours}}</b> 小时 <b>{{minutes}}</b> 分钟 <b>{{seconds}}</b> 秒
+  <section class="counter section-pad" aria-live="polite">
+    <p class="counter-title"><span>♥</span> 我们已经一起走过 <span>♥</span></p>
+    <div class="time-row">
+      <div v-for="item in elapsedItems" :key="item.label" class="time-unit">
+        <strong :class="item.color">{{ item.value }}</strong><span>{{ item.label }}</span>
+      </div>
     </div>
-    <div class="line"></div>
-    <p>距离在一起二周年</p>
-    <div class="time small">已过去 <b>{{days}}</b> 天 <b>{{hours}}</b> 小时 <b>{{minutes}}</b> 分钟</div>
+    <div class="counter-divider"><span>♥</span></div>
+    <p class="counter-title secondary">距离下一次纪念日还有</p>
+    <div class="time-row compact">
+      <div v-for="item in remainingItems" :key="item.label" class="time-unit">
+        <strong :class="item.color">{{ item.value }}</strong><span>{{ item.label }}</span>
+      </div>
+    </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import {ref,onMounted} from 'vue'
-const days=ref(1120),hours=ref(3),minutes=ref(41),seconds=ref(47)
-function update(){
- const start=new Date('2023-07-12').getTime();
- const diff=Date.now()-start;
- days.value=Math.floor(diff/86400000);
- hours.value=Math.floor(diff/3600000)%24;
- minutes.value=Math.floor(diff/60000)%60;
- seconds.value=Math.floor(diff/1000)%60;
-}
-onMounted(()=>{update();setInterval(update,1000)})
-</script>
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { site } from '../data/site'
 
-<style scoped>
-.counter{text-align:center;padding:40px 20px;color:#444}
-.counter p{font-size:20px}
-.time{font-size:28px;margin:20px}.time b{color:#ff718e;font-size:42px;margin:0 6px}.line{height:1px;background:#ffd1db;max-width:500px;margin:auto}.small{font-size:22px}
-</style>
+const now = ref(Date.now())
+let timer: number | undefined
+
+const split = (milliseconds: number) => {
+  const safe = Math.max(0, milliseconds)
+  return {
+    days: Math.floor(safe / 86_400_000),
+    hours: Math.floor(safe / 3_600_000) % 24,
+    minutes: Math.floor(safe / 60_000) % 60,
+    seconds: Math.floor(safe / 1_000) % 60,
+  }
+}
+
+const nextAnniversary = computed(() => {
+  const current = new Date(now.value)
+  let year = current.getFullYear()
+  let target = new Date(year, site.anniversaryMonth - 1, site.anniversaryDay)
+  if (target.getTime() <= now.value) target = new Date(++year, site.anniversaryMonth - 1, site.anniversaryDay)
+  return target.getTime()
+})
+
+const elapsed = computed(() => split(now.value - new Date(site.startDate).getTime()))
+const remaining = computed(() => split(nextAnniversary.value - now.value))
+const colors = ['pink', 'orange', 'blue', 'purple']
+const toItems = (value: ReturnType<typeof split>) => [
+  { value: value.days, label: '天', color: colors[0] },
+  { value: String(value.hours).padStart(2, '0'), label: '小时', color: colors[1] },
+  { value: String(value.minutes).padStart(2, '0'), label: '分钟', color: colors[2] },
+  { value: String(value.seconds).padStart(2, '0'), label: '秒', color: colors[3] },
+]
+const elapsedItems = computed(() => toItems(elapsed.value))
+const remainingItems = computed(() => toItems(remaining.value))
+
+onMounted(() => { timer = window.setInterval(() => { now.value = Date.now() }, 1000) })
+onUnmounted(() => window.clearInterval(timer))
+</script>

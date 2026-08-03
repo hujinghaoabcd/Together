@@ -1,16 +1,20 @@
 <template>
-  <main class="page">
-    <h1>Together</h1>
-    <p>我们的故事，从这里开始。</p>
-  </main>
+  <div class="app-shell">
+    <AppHeader />
+    <RouterView v-slot="{ Component }">
+      <Transition name="page" mode="out-in">
+        <component :is="Component" />
+      </Transition>
+    </RouterView>
+    <footer class="site-footer">
+      <strong>Together</strong>
+      <span>把普通的日子，慢慢过成值得珍藏的故事。</span>
+      <small>© {{ new Date().getFullYear() }} · Made with ♥</small>
+    </footer>
+  </div>
 </template>
 
-<style scoped>
-.page {
-  min-height: 100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-}
-</style>
+<script setup lang="ts">
+import { RouterView } from 'vue-router'
+import AppHeader from './components/AppHeader.vue'
+</script>

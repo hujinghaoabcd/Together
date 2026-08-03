@@ -1,11 +1,12 @@
 <template>
-<div class="float-menu">
-  <div>⌂</div>
-  <div>★</div>
-  <div>♡</div>
-  <div>☺</div>
-</div>
+  <aside class="float-menu" aria-label="快捷导航">
+    <RouterLink to="/" title="首页">⌂</RouterLink>
+    <RouterLink to="/wishlist" title="恋爱清单">☆</RouterLink>
+    <RouterLink to="/blessings" title="祝福墙">♡</RouterLink>
+    <button title="返回顶部" @click="top">↑</button>
+  </aside>
 </template>
-<style scoped>
-.float-menu{position:fixed;right:22px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px}.float-menu div{width:48px;height:48px;background:white;border-radius:16px;box-shadow:0 5px 20px #ddd;display:flex;align-items:center;justify-content:center;color:#ff7895;font-size:22px}
-</style>
+<script setup lang="ts">
+import { RouterLink } from 'vue-router'
+const top = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+</script>
