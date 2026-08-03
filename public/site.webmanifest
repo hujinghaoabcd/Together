@@ -1,0 +1,18 @@
+{
+  "name": "Together · 我们的小站",
+  "short_name": "Together",
+  "description": "记录两个人的点点滴滴。",
+  "start_url": "/Together/",
+  "scope": "/Together/",
+  "display": "standalone",
+  "background_color": "#fffaf8",
+  "theme_color": "#f38da2",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
