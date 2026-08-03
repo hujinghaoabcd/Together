@@ -10,6 +10,7 @@
       <RouterLink to="/gallery">相册</RouterLink>
       <RouterLink to="/wishlist">清单</RouterLink>
       <RouterLink to="/about">关于</RouterLink>
+      <RouterLink to="/data" title="数据管理" aria-label="数据管理">数据</RouterLink>
     </nav>
   </header>
 </template>
