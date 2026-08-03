@@ -28,7 +28,7 @@ const blessings = ref<Blessing[]>(stored ? JSON.parse(stored) : defaults)
 const name = ref('')
 const message = ref('')
 const submit = () => {
-  blessings.value.unshift({ id: Date.now(), name: name.value, message: message.value, date: new Date().toLocaleDateString('zh-CN').replaceAll('/', '.') })
+  blessings.value.unshift({ id: Date.now(), name: name.value, message: message.value, date: new Date().toLocaleDateString('zh-CN').replace(/\//g, '.') })
   localStorage.setItem('together-blessings', JSON.stringify(blessings.value))
   name.value = ''
   message.value = ''
