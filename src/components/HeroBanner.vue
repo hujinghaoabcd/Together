@@ -1,5 +1,5 @@
 <template>
-  <section class="hero" :style="{ backgroundImage: `url(${asset('images/classroom.svg')})` }">
+  <section class="hero" :style="{ backgroundImage: `url(${asset('images/classroom-hero.webp')})` }">
     <div class="hero-shade"></div>
     <div class="hero-copy">
       <span class="eyebrow">OUR LITTLE SPACE</span>
