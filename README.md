@@ -5,10 +5,14 @@
 ## 已实现
 
 - 教室主题首页、双头像与恋爱计时器
-- 下一纪念日倒计时
+- 下一纪念日自动倒计时
 - 祝福墙、点点滴滴、随笔、关于我们、恋爱清单和相册
-- 祝福与清单的浏览器本地保存
-- 响应式布局与 GitHub Pages 自动部署
+- 可新增、删除和恢复的本地祝福墙
+- 可新增、勾选、删除和恢复的恋爱清单
+- 相册灯箱预览，支持键盘方向键与 `Esc`
+- 本地数据 JSON 导出、导入和清理
+- 页面标题与描述随路由更新
+- 响应式布局、减少动画偏好支持和 GitHub Pages 自动部署
 - 所有占位图片均为仓库内原创 SVG，不依赖外部 CDN
 
 ## 本地运行
@@ -32,7 +36,13 @@ npm run build
 src/data/site.ts
 ```
 
-可修改昵称、相恋日期、寄语、时间线、日常、清单和相册数据。
+可修改：
+
+- 网站标题与副标题
+- 两个人的昵称和头像
+- 相恋日期与纪念日
+- 首页寄语
+- 时间线、点滴、随笔、默认清单和相册数据
 
 替换资源：
 
@@ -43,11 +53,42 @@ public/avatars/girl.svg       右侧头像
 public/images/photo-*.svg     相册图片
 ```
 
-替换为 JPG、PNG 或 WebP 后，同时修改 `src/data/site.ts` 中的路径即可。
+替换为 JPG、PNG 或 WebP 后，同时修改 `src/data/site.ts` 中的路径即可。资源路径不要以 `/` 开头，项目会自动拼接 GitHub Pages 的 `/Together/` 基础路径。
+
+## 页面路由
+
+项目采用 Hash Router，适合 GitHub Pages：
+
+```text
+#/                  首页
+#/blessings         祝福墙
+#/moments           点点滴滴
+#/notes             随笔说说
+#/about             关于我们
+#/wishlist          恋爱清单
+#/gallery           相册
+#/data              数据管理
+```
+
+## 本地数据与备份
+
+祝福墙和恋爱清单保存在当前浏览器的 `localStorage` 中。访问“数据管理”页面可以：
+
+- 导出 JSON 备份
+- 从备份文件恢复
+- 清除当前浏览器里的 Together 数据
+
+这些数据不会自动同步到其他设备，也不会上传到 GitHub。需要多人共享留言时，可在后续接入 Cloudflare Workers、Supabase 或 GitHub Discussions。
 
 ## GitHub Pages
 
-工作流已经写入 `.github/workflows/deploy.yml`。在仓库设置中进入：
+工作流位于：
+
+```text
+.github/workflows/deploy.yml
+```
+
+在仓库设置中进入：
 
 ```text
 Settings → Pages → Build and deployment → Source → GitHub Actions
@@ -59,8 +100,10 @@ Settings → Pages → Build and deployment → Source → GitHub Actions
 https://hujinghaoabcd.github.io/Together/
 ```
 
-项目采用 Hash Router，因此子页面刷新不会产生 GitHub Pages 404。
+## 项目文档
 
-## 动态功能说明
+后续路线见：
 
-GitHub Pages 是静态托管。当前祝福墙和恋爱清单使用 `localStorage`，数据仅保存在访问者当前浏览器中。若需要多人共享留言，可在后续接入 Cloudflare Workers、Supabase 或 GitHub Discussions。
+```text
+docs/ROADMAP.md
+```
