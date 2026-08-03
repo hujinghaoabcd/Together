@@ -15,7 +15,7 @@
 - 页面标题与描述随路由更新
 - Favicon、Web App Manifest 与基础分享元数据
 - 响应式布局、减少动画偏好支持和 GitHub Pages 自动部署
-- 所有占位图片均为仓库内原创 SVG，不依赖外部 CDN
+- 首页教室背景采用仓库内 WebP，其他占位图片为原创 SVG，不依赖外部 CDN
 
 ## 本地运行
 
@@ -49,13 +49,13 @@ src/data/site.ts
 替换资源：
 
 ```text
-public/images/classroom.svg   顶部背景
-public/avatars/boy.svg        左侧头像
-public/avatars/girl.svg       右侧头像
-public/images/photo-*.svg     相册图片
+public/images/classroom-hero.webp   顶部教室背景
+public/avatars/boy.svg              左侧头像
+public/avatars/girl.svg             右侧头像
+public/images/photo-*.svg           相册图片
 ```
 
-替换为 JPG、PNG 或 WebP 后，同时修改 `src/data/site.ts` 中的路径即可。资源路径不要以 `/` 开头，项目会自动拼接 GitHub Pages 的 `/Together/` 基础路径。
+替换头像或相册为 JPG、PNG 或 WebP 后，同时修改 `src/data/site.ts` 中的路径即可。资源路径不要以 `/` 开头，项目会自动拼接 GitHub Pages 的 `/Together/` 基础路径。首页背景路径位于 `src/components/HeroBanner.vue`。
 
 ## 页面路由
 
