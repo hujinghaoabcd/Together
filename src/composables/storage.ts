@@ -1,6 +1,8 @@
 export const STORAGE_KEYS = {
   blessings: 'together-blessings',
   wishlist: 'together-wishlist',
+  moments: 'together-moments',
+  notes: 'together-notes',
 } as const
 
 type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS]
@@ -18,7 +20,8 @@ export function readStorage<T>(key: string, fallback: T): T {
   try {
     const raw = localStorage.getItem(key)
     if (!raw) return clone(fallback)
-    return JSON.parse(raw) as T
+    const parsed = JSON.parse(raw) as T
+    return parsed ?? clone(fallback)
   } catch {
     return clone(fallback)
   }
