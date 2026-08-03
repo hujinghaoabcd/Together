@@ -1,12 +1,12 @@
 <template>
   <main class="inner-page pattern-bg">
-    <PageHeader title="数据管理" subtitle="备份这个浏览器里的祝福与清单，换设备时也能继续使用。" icon="🗂️" />
+    <PageHeader title="数据管理" subtitle="备份这个浏览器里的记录，换设备时也能继续使用。" icon="🗂️" />
     <section class="data-tools page-width">
       <article class="data-panel">
         <div class="data-panel__icon">⬇</div>
         <div>
           <h2>导出备份</h2>
-          <p>下载一个 JSON 文件，包含当前浏览器中的祝福墙和恋爱清单数据。</p>
+          <p>下载一个 JSON 文件，包含祝福墙、恋爱清单、点点滴滴和随笔说说。</p>
         </div>
         <button class="primary-action" type="button" @click="downloadBackup">导出数据</button>
       </article>
@@ -25,7 +25,7 @@
         <div class="data-panel__icon">↺</div>
         <div>
           <h2>恢复默认</h2>
-          <p>清除当前浏览器保存的祝福和清单状态。仓库中的静态内容不会受到影响。</p>
+          <p>清除当前浏览器保存的祝福、清单、点滴和随笔。仓库中的静态内容不会受到影响。</p>
         </div>
         <button class="danger-action" type="button" @click="clearData">清除本地数据</button>
       </article>
@@ -64,7 +64,7 @@ const handleImport = async (event: Event) => {
 }
 
 const clearData = () => {
-  if (!window.confirm('确定清除当前浏览器中的祝福与清单数据吗？')) return
+  if (!window.confirm('确定清除当前浏览器中的祝福、清单、点滴和随笔吗？')) return
   clearTogetherData()
   message.value = '本地数据已清除，正在恢复默认内容……'
   window.setTimeout(() => window.location.reload(), 500)
