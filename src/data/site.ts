@@ -1,3 +1,18 @@
+export type MomentItem = {
+  id: number
+  date: string
+  title: string
+  text: string
+  tag: string
+}
+
+export type NoteItem = {
+  id: number
+  date: string
+  title: string
+  text: string
+}
+
 export const site = {
   title: 'Together',
   subtitle: '记录我们的点点滴滴',
@@ -27,16 +42,16 @@ export const story = [
   { date: '2025.07.12', title: '第二个纪念日', text: '我们还在认真生活，也还在认真喜欢对方。', icon: '★' },
 ]
 
-export const moments = [
-  { date: '2026.08.01', title: '开始搭建 Together', text: '终于有了一个只属于我们的线上小空间。', tag: '生活' },
-  { date: '2026.07.20', title: '周末散步', text: '天气不算凉快，但傍晚的风很好。', tag: '日常' },
-  { date: '2026.06.18', title: '一起做晚饭', text: '卖相普通，味道意外不错。', tag: '下厨' },
+export const moments: MomentItem[] = [
+  { id: 1, date: '2026.08.01', title: '开始搭建 Together', text: '终于有了一个只属于我们的线上小空间。', tag: '生活' },
+  { id: 2, date: '2026.07.20', title: '周末散步', text: '天气不算凉快，但傍晚的风很好。', tag: '日常' },
+  { id: 3, date: '2026.06.18', title: '一起做晚饭', text: '卖相普通，味道意外不错。', tag: '下厨' },
 ]
 
-export const notes = [
-  { date: '08-01', title: '关于这个网站', text: '想把照片、清单和日常都放在同一个地方，简单一点，也长久一点。' },
-  { date: '07-20', title: '傍晚', text: '很多时候没有特别的事情发生，但一起走一段路就觉得很好。' },
-  { date: '06-18', title: '今天的晚饭', text: '两个人在厨房忙来忙去，是很具体的幸福。' },
+export const notes: NoteItem[] = [
+  { id: 1, date: '2026.08.01', title: '关于这个网站', text: '想把照片、清单和日常都放在同一个地方，简单一点，也长久一点。' },
+  { id: 2, date: '2026.07.20', title: '傍晚', text: '很多时候没有特别的事情发生，但一起走一段路就觉得很好。' },
+  { id: 3, date: '2026.06.18', title: '今天的晚饭', text: '两个人在厨房忙来忙去，是很具体的幸福。' },
 ]
 
 export const initialWishlist = [
