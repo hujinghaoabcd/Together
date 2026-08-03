@@ -3,10 +3,13 @@ export const STORAGE_KEYS = {
   wishlist: 'together-wishlist',
 } as const
 
+type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS]
+const storageKeys = Object.values(STORAGE_KEYS) as StorageKey[]
+
 export type TogetherBackup = {
   version: 1
   exportedAt: string
-  data: Partial<Record<(typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS], unknown>>
+  data: Partial<Record<StorageKey, unknown>>
 }
 
 const clone = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T
@@ -31,7 +34,7 @@ export function resetStorage(key: string): void {
 
 export function createBackup(): TogetherBackup {
   const data: TogetherBackup['data'] = {}
-  Object.values(STORAGE_KEYS).forEach((key) => {
+  storageKeys.forEach((key) => {
     const raw = localStorage.getItem(key)
     if (!raw) return
     try {
@@ -50,22 +53,30 @@ export function downloadBackup(): void {
   const anchor = document.createElement('a')
   anchor.href = url
   anchor.download = `together-backup-${new Date().toISOString().slice(0, 10)}.json`
+  document.body.appendChild(anchor)
   anchor.click()
-  URL.revokeObjectURL(url)
+  anchor.remove()
+  window.setTimeout(() => URL.revokeObjectURL(url), 0)
 }
 
 export async function importBackup(file: File): Promise<void> {
   const parsed = JSON.parse(await file.text()) as TogetherBackup
-  if (!parsed || parsed.version !== 1 || typeof parsed.data !== 'object') {
+  if (
+    !parsed ||
+    parsed.version !== 1 ||
+    !parsed.data ||
+    typeof parsed.data !== 'object' ||
+    Array.isArray(parsed.data)
+  ) {
     throw new Error('不是可识别的 Together 备份文件')
   }
 
-  Object.values(STORAGE_KEYS).forEach((key) => {
+  storageKeys.forEach((key) => {
     if (!(key in parsed.data)) return
     localStorage.setItem(key, JSON.stringify(parsed.data[key]))
   })
 }
 
 export function clearTogetherData(): void {
-  Object.values(STORAGE_KEYS).forEach((key) => localStorage.removeItem(key))
+  storageKeys.forEach((key) => localStorage.removeItem(key))
 }
